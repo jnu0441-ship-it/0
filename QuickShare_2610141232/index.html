@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>우리 반 학습 캘린더 | 2026</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--ink:#20263a;--muted:#788198;--line:#e7eaf2;--blue:#5267e8;--blue2:#edf0ff;--red:#e45e69;--green:#16876b;--gold:#bd7a16;--shadow:0 12px 35px #26325b0d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif}
+header{background:linear-gradient(120deg,#3448b8,#6679f0);color:white;padding:25px 18px 28px}
+.wrap{max-width:1120px;margin:auto}header .eyebrow{font-size:12px;opacity:.8;letter-spacing:.12em;font-weight:700}h1{font-size:clamp(25px,4vw,36px);margin:7px 0 6px}header p{margin:0;opacity:.88;font-size:14px}
+main{max-width:1120px;margin:-13px auto 35px;padding:0 14px;display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,.9fr);gap:16px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:17px}
+.toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:15px}.monthtitle{font-size:22px;font-weight:800;margin-right:auto}
+button,input,select{font:inherit}button{border:0;cursor:pointer;border-radius:10px;padding:9px 12px;font-weight:700;background:#f0f2f8;color:var(--ink)}button:hover{filter:brightness(.97)}.primary{background:var(--blue);color:white}.ghost{background:white;border:1px solid var(--line)}.todaybtn{background:var(--blue2);color:var(--blue)}
+.searchrow{display:flex;gap:7px;margin-bottom:13px}.searchrow input{min-width:0;flex:1}.field,input,select{width:100%;padding:10px 11px;border:1px solid #dfe3ee;border-radius:10px;background:white;color:var(--ink);outline:none}.field:focus,input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #5267e81c}
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:13px}.chip{font-size:12px;padding:7px 10px;border-radius:999px;background:#f3f4f8;color:#657087}.chip.active{background:var(--blue2);color:var(--blue)}
+.weekdays,.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.weekday{text-align:center;font-size:12px;color:var(--muted);padding:7px 0;font-weight:800}.weekday:first-child{color:var(--red)}.weekday:last-child{color:var(--blue)}
+.day{min-height:92px;border:1px solid var(--line);border-radius:12px;padding:7px 6px;background:white;cursor:pointer;overflow:hidden;text-align:left;display:flex;flex-direction:column;gap:4px}.day:hover{border-color:#aab4f8}.day.outside{background:#fafbfe;color:#b8bfce}.day.selected{border:2px solid var(--blue);padding:6px 5px;background:#f8f9ff}.day.today .num{background:var(--blue);color:white;border-radius:50%}.num{font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;width:24px;height:24px}.eventtag{font-size:10px;line-height:1.25;padding:3px 4px;border-radius:5px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:keep-all}.tag-school{background:#fff0d9;color:#88550a}.tag-test{background:#ffe8eb;color:#b73c4a}.tag-class{background:#e7f7f1;color:#13745b}.tag-personal{background:#edf0ff;color:#485ad0}.more{font-size:10px;color:var(--muted)}
+.rightcol{display:flex;flex-direction:column;gap:15px}.sidehead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}.sidehead h2{font-size:17px;margin:0}.datebig{font-size:27px;font-weight:850;letter-spacing:-.04em}.subdate{font-size:12px;color:var(--muted);margin-top:2px}.eventlist{display:flex;flex-direction:column;gap:8px;margin-top:13px}.event{border:1px solid var(--line);border-radius:12px;padding:11px;display:flex;gap:10px;align-items:flex-start}.eventbar{width:4px;min-width:4px;border-radius:5px;align-self:stretch;background:var(--blue)}.eventbar.test{background:var(--red)}.eventbar.school{background:var(--gold)}.eventbar.class{background:var(--green)}.eventtitle{font-weight:800;font-size:14px}.eventmeta{font-size:11px;color:var(--muted);margin-top:3px}.eventdesc{font-size:12px;color:#5f687e;margin-top:5px;white-space:pre-wrap}.event button{margin-left:auto;padding:5px 7px;font-size:11px}
+.empty{color:var(--muted);font-size:13px;text-align:center;padding:22px 8px;border:1px dashed var(--line);border-radius:12px}
+.quick{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.quick button{text-align:left;padding:12px;border:1px solid var(--line);background:white}.quick strong{display:block;font-size:14px}.quick span{font-size:11px;color:var(--muted)}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.formgrid .full{grid-column:1/-1}label{display:block;font-size:12px;font-weight:750;color:#687189;margin-bottom:5px}.sectionnote{font-size:11px;color:var(--muted);line-height:1.5;margin-top:10px}
+.upcomingitem{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.upcomingitem:last-child{border-bottom:0}.mini-date{min-width:47px;text-align:center;border-radius:10px;background:#f1f3ff;padding:7px 3px;color:var(--blue);font-weight:800;font-size:12px}.mini-date span{display:block;font-size:10px;color:var(--muted)}
+footer{max-width:1120px;margin:0 auto 25px;padding:0 16px;color:var(--muted);font-size:11px;line-height:1.6}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#20263a;color:#fff;padding:11px 15px;border-radius:12px;font-size:13px;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1}
+@media(max-width:800px){main{grid-template-columns:1fr;margin-top:-12px}.day{min-height:73px;padding:5px 4px}.day.selected{padding:4px 3px}.eventtag{font-size:9px;padding:2px 3px}.weekday{font-size:11px}.panel{padding:12px}.calendar,.weekdays{gap:3px}.toolbar{gap:5px}.toolbar button{padding:8px 9px;font-size:12px}.monthtitle{font-size:20px}.rightcol{gap:12px}}
+@media(max-width:390px){.day{min-height:63px}.eventtag{font-size:8px}.num{width:21px;height:21px}.searchrow button{padding:8px}.formgrid{grid-template-columns:1fr}.formgrid .full{grid-column:auto}}
+</style></head>
+<body>
+<header><div class="wrap"><div class="eyebrow">CLASS LEARNING MANAGER · 2026</div><h1>우리 반 학습 캘린더</h1><p>학사일정부터 수행평가까지, 날짜 하나로 빠르게 확인하기</p></div></header>
+<main>
+<section class="panel">
+ <div class="toolbar"><div class="monthtitle" id="monthTitle">2026년 10월</div><button id="prev">‹ 이전</button><button id="today" class="todaybtn">오늘</button><button id="next">다음 ›</button></div>
+ <div class="searchrow"><input id="dateSearch" type="date" aria-label="이동할 날짜"><button id="goDate" class="primary">날짜 이동</button></div>
+ <div class="filters" id="filters">
+  <button class="chip active" data-filter="all">전체 일정</button><button class="chip" data-filter="test">시험·수행평가</button><button class="chip" data-filter="school">학사일정</button><button class="chip" data-filter="class">학급 일정</button><button class="chip" data-filter="personal">내 일정</button>
+ </div>
+ <div class="weekdays"><div class="weekday">일</div><div class="weekday">월</div><div class="weekday">화</div><div class="weekday">수</div><div class="weekday">목</div><div class="weekday">금</div><div class="weekday">토</div></div>
+ <div class="calendar" id="calendar"></div>
+ <div class="sectionnote">날짜를 누르면 해당 날짜의 일정이 오른쪽에 표시돼요. 직접 추가한 일정은 이 기기의 브라우저에 저장됩니다.</div>
+</section>
+<aside class="rightcol">
+ <section class="panel">
+  <div class="sidehead"><div><h2>선택한 날짜</h2><div class="subdate" id="selectedWeekday">날짜를 선택하세요</div></div><div class="datebig" id="selectedDay">--</div></div>
+  <div id="dayEvents" class="eventlist"><div class="empty">달력에서 날짜를 선택해 주세요.</div></div>
+ </section>
+ <section class="panel">
+  <div class="sidehead"><h2>다가오는 주요 일정</h2><button class="ghost" id="showAll">전체 보기</button></div>
+  <div id="upcoming"></div>
+ </section>
+ <section class="panel">
+  <div class="sidehead"><h2>일정 직접 추가</h2><span class="chip">내 일정</span></div>
+  <form id="eventForm">
+   <div class="formgrid">
+    <div class="full"><label for="eventTitle">일정 이름 *</label><input id="eventTitle" required maxlength="80" placeholder="예: 영어 단어 시험"></div>
+    <div><label for="eventDate">날짜 *</label><input id="eventDate" type="date" required></div>
+    <div><label for="eventType">분류</label><select id="eventType"><option value="test">시험·수행평가</option><option value="school">학사일정</option><option value="class">학급 일정</option><option value="personal">내 일정</option></select></div>
+    <div class="full"><label for="eventDesc">메모 (선택)</label><input id="eventDesc" maxlength="180" placeholder="준비물, 범위, 제출 방식 등"></div>
+    <div class="full"><button class="primary" type="submit" style="width:100%">＋ 일정 추가</button></div>
+   </div>
+  </form>
+  <div class="sectionnote">※ 학교에서 받은 학사일정 파일을 바탕으로 주요 일정을 입력했어요. 일정은 학교 사정에 따라 바뀔 수 있으니 공지와 함께 확인해 주세요.</div>
+ </section>
+ <section class="panel">
+  <div class="sidehead"><h2>빠른 이동</h2></div>
+  <div class="quick"><button data-jump="2026-10-30"><strong>10/30</strong><span>미적분 수행평가</span></button><button data-jump="2026-10-26"><strong>10/26</strong><span>2학기 1회고사 시작</span></button><button data-jump="2026-11-19"><strong>11/19</strong><span>수능 임시휴일</span></button><button data-jump="2026-12-24"><strong>12/24</strong><span>대평원제</span></button></div>
+ </section>
+</aside>
+</main>
+<footer>2026학년도 학사일정 기반 · 수행평가 날짜는 사용자가 알려준 <b>10월 30일 미적분 수행평가</b>를 추가했어요. 정확한 과목별 평가 범위·시간 등은 공지에 맞게 직접 메모해 두세요.</footer>
+<div class="modal-backdrop" id="dayModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+ <div class="modal-card"><div class="modal-head"><div><div class="modal-kicker">DAY DETAILS</div><h2 id="modalTitle">선택한 날짜</h2></div><button class="close-modal" id="closeModal" aria-label="닫기">✕</button></div><div id="modalBody"></div><div class="modal-actions"><button class="ghost" id="modalPrev">← 전날</button><button class="primary" id="modalAdd">이 날짜에 일정 추가</button><button class="ghost" id="modalNext">다음 날 →</button></div></div>
+</div>
+<div class="toast" id="toast"></div>
+<style>
+.modal-backdrop{position:fixed;inset:0;background:rgba(20,25,48,.56);z-index:1000;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)}.modal-backdrop.open{display:flex}.modal-card{width:min(620px,100%);max-height:min(82vh,760px);overflow:auto;background:white;border-radius:22px;padding:22px;box-shadow:0 24px 90px #10152c55;animation:pop .16s ease-out}.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:14px}.modal-kicker{font-size:10px;font-weight:900;letter-spacing:.15em;color:var(--blue)}.modal-head h2{font-size:clamp(23px,5vw,32px);margin:4px 0 0;letter-spacing:-.04em}.close-modal{font-size:20px;width:40px;height:40px;padding:0;border-radius:50%;background:#f1f3f8}.modal-event{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}.modal-event:last-child{border-bottom:0}.modal-event .eventbar{min-height:48px}.modal-event-title{font-size:17px;font-weight:850}.modal-event-meta{font-size:12px;color:var(--muted);margin-top:4px}.modal-event-desc{font-size:14px;color:#555f76;margin-top:8px;white-space:pre-wrap}.modal-empty{padding:28px 10px;text-align:center;color:var(--muted);background:#f7f8fc;border-radius:14px}.modal-actions{display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap;margin-top:18px}.modal-actions button{flex:1}@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}@media(max-width:520px){.modal-card{padding:17px;border-radius:18px}.modal-actions{display:grid;grid-template-columns:1fr 1fr}.modal-actions #modalAdd{grid-column:1/-1;grid-row:1}.modal-event-title{font-size:16px}}
+</style>
+<script>
+const SCHOOL = [
+['2026-03-02','대체공휴일 (3·1절)','school'],['2026-03-20','개교기념일','school'],['2026-03-24','학력평가 (1~3학년)','test'],['2026-03-26','학교설명회','school'],
+['2026-04-08','공개수업','school'],['2026-04-28','1학기 1회고사','test'],['2026-04-29','1학기 1회고사','test'],['2026-04-30','1학기 1회고사','test'],
+['2026-05-01','1학기 1회고사','test'],['2026-05-04','재량휴업일','school'],['2026-05-05','어린이날','school'],['2026-05-07','학력평가 (3학년)','test'],['2026-05-08','스포츠문화축제','school'],
+['2026-05-19','체험학습 (2학년)','school'],['2026-05-20','체험학습 (2학년)','school'],['2026-05-21','체험학습 (2학년)','school'],['2026-05-22','체험학습 (1·2·3학년)','school'],['2026-05-25','대체공휴일 (석가탄신일)','school'],
+['2026-06-03','임시휴일 (지방선거)','school'],['2026-06-04','학력평가 (1~3학년)','test'],['2026-06-29','1학기 2회고사','test'],['2026-06-30','1학기 2회고사','test'],
+['2026-07-01','1학기 2회고사','test'],['2026-07-02','1학기 2회고사','test'],['2026-07-08','학력평가 (3학년)','test'],['2026-07-17','제헌절','school'],['2026-07-21','방학식','school'],
+['2026-08-11','개학일','school'],['2026-08-17','대체공휴일 (광복절)','school'],['2026-09-02','학력평가 (1·2·3학년)','test'],['2026-09-24','추석 연휴','school'],['2026-09-25','추석 연휴','school'],
+['2026-09-28','2학기 1회고사','test'],['2026-09-29','2학기 1회고사','test'],['2026-09-30','2학기 1회고사','test'],
+['2026-10-01','2학기 1회고사','test'],['2026-10-02','2학기 1회고사','test'],['2026-10-03','대체공휴일 (개천절)','school'],['2026-10-09','한글날','school'],['2026-10-20','학력평가 (1~3학년)','test'],['2026-10-22','공개수업','school'],
+['2026-10-30','미적분 수행평가','test','수행평가 일정 · 세부 범위와 준비물은 선생님 공지 확인'],
+['2026-11-19','대학수학능력시험 (임시휴일)','school'],['2026-11-20','재량휴업일','school'],['2026-11-23','2학기 2회고사 (3학년)','test'],['2026-11-24','2학기 2회고사 (3학년)','test'],['2026-11-25','2학기 2회고사 (3학년)','test'],['2026-11-26','2학기 2회고사 (3학년)','test'],['2026-11-27','2학기 2회고사 (3학년)','test'],
+['2026-12-07','2학기 2회고사 (1·2학년)','test'],['2026-12-08','2학기 2회고사 (1·2학년)','test'],['2026-12-09','2학기 2회고사 (1·2학년)','test'],['2026-12-10','2학기 2회고사 (1·2학년)','test'],['2026-12-11','2학기 2회고사 (1·2학년)','test'],
+['2026-12-17','졸업사정회','school'],['2026-12-25','성탄절','school'],['2026-12-28','대평원제','school'],['2026-12-29','진급사정회','school'],['2026-12-30','졸업식·종업식','school']
+].map((e,i)=>({id:'s'+i,date:e[0],title:e[1],type:e[2],desc:e[3]||'',fixed:true}));
+const key='classLearningCalendar2026_v1';
+let custom=[];try{custom=JSON.parse(localStorage.getItem(key)||'[]')}catch(e){}
+let view=new Date(2026,9,1), selected='2026-10-14', filter='all';
+const $=id=>document.getElementById(id);
+const pad=n=>String(n).padStart(2,'0');
+const iso=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const allEvents=()=>[...SCHOOL,...custom];
+const fmt=d=>`${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일`;
+function visibleEvents(date){return allEvents().filter(e=>e.date===date&&(filter==='all'||e.type===filter)).sort((a,b)=>a.title.localeCompare(b.title,'ko'))}
+function tagClass(type){return 'tag-'+type}
+function renderCalendar(){
+ $('monthTitle').textContent=`${view.getFullYear()}년 ${view.getMonth()+1}월`;
+ const first=new Date(view.getFullYear(),view.getMonth(),1), start=new Date(first);start.setDate(first.getDate()-first.getDay());
+ $('calendar').innerHTML='';
+ for(let i=0;i<42;i++){let d=new Date(start);d.setDate(start.getDate()+i);let date=iso(d), isMonth=d.getMonth()===view.getMonth();
+  let b=document.createElement('button');b.className='day'+(!isMonth?' outside':'')+(date===selected?' selected':'')+(date===iso(new Date())?' today':'');b.setAttribute('aria-label',fmt(d));
+  let num=document.createElement('div');num.className='num';num.textContent=d.getDate();b.appendChild(num);
+  let evs=visibleEvents(date);evs.slice(0,2).forEach(e=>{let t=document.createElement('div');t.className='eventtag '+tagClass(e.type);t.textContent=e.title;b.appendChild(t)});
+  if(evs.length>2){let m=document.createElement('div');m.className='more';m.textContent=`+${evs.length-2}개 더`;b.appendChild(m)}
+  b.addEventListener('click',()=>{selectDate(date);openDayModal(date)});$('calendar').appendChild(b);
+ }
+}
+function selectDate(date){selected=date;let d=new Date(date+'T12:00:00');view=new Date(d.getFullYear(),d.getMonth(),1);$('eventDate').value=date;$('dateSearch').value=date;renderCalendar();renderSelected();renderUpcoming()}
+function renderSelected(){
+ const d=new Date(selected+'T12:00:00');$('selectedDay').textContent=`${d.getMonth()+1}/${d.getDate()}`;$('selectedWeekday').textContent=`${fmt(d)} · ${['일요일','월요일','화요일','수요일','목요일','금요일','토요일'][d.getDay()]}`;
+ let evs=visibleEvents(selected), root=$('dayEvents');root.innerHTML='';
+ if(!evs.length){root.innerHTML='<div class="empty">등록된 일정이 없어요.<br>아래에서 새 일정을 추가해 보세요.</div>';return}
+ evs.forEach(e=>{let div=document.createElement('div');div.className='event';let bar=document.createElement('div');bar.className='eventbar '+e.type;let content=document.createElement('div');content.style.flex='1';let title=document.createElement('div');title.className='eventtitle';title.textContent=e.title;let meta=document.createElement('div');meta.className='eventmeta';meta.textContent=({test:'시험·수행평가',school:'학사일정',class:'학급 일정',personal:'내 일정'})[e.type]||'일정';content.append(title,meta);if(e.desc){let desc=document.createElement('div');desc.className='eventdesc';desc.textContent=e.desc;content.appendChild(desc)}div.append(bar,content);
+ if(!e.fixed){let del=document.createElement('button');del.textContent='삭제';del.className='ghost';del.addEventListener('click',()=>{custom=custom.filter(x=>x.id!==e.id);save();renderAll();toast('일정을 삭제했어요.')});div.appendChild(del)}root.appendChild(div)})
+}
+function renderUpcoming(){
+ let future=allEvents().filter(e=>e.date>=selected&&(filter==='all'||e.type===filter)).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,6);let root=$('upcoming');root.innerHTML='';
+ if(!future.length){root.innerHTML='<div class="empty">예정된 일정이 없어요.</div>';return}
+ future.forEach(e=>{let d=new Date(e.date+'T12:00:00'),el=document.createElement('div');el.className='upcomingitem';let dt=document.createElement('div');dt.className='mini-date';dt.innerHTML=`${d.getMonth()+1}/${d.getDate()}<span>${['일','월','화','수','목','금','토'][d.getDay()]}</span>`;let tx=document.createElement('div');tx.style.minWidth='0';let t=document.createElement('div');t.className='eventtitle';t.textContent=e.title;let m=document.createElement('div');m.className='eventmeta';m.textContent=({test:'시험·수행평가',school:'학사일정',class:'학급 일정',personal:'내 일정'})[e.type];tx.append(t,m);el.append(dt,tx);el.style.cursor='pointer';el.addEventListener('click',()=>selectDate(e.date));root.appendChild(el)})
+}
+function openDayModal(date){
+ const d=new Date(date+'T12:00:00');$('modalTitle').textContent=`${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 (${['일','월','화','수','목','금','토'][d.getDay()]})`;
+ const root=$('modalBody');root.innerHTML='';const evs=visibleEvents(date);
+ if(!evs.length){root.innerHTML='<div class="modal-empty">이 날짜에는 등록된 일정이 없어요.</div>'}
+ evs.forEach(e=>{const item=document.createElement('div');item.className='modal-event';const bar=document.createElement('div');bar.className='eventbar '+e.type;const body=document.createElement('div');body.style.flex='1';const title=document.createElement('div');title.className='modal-event-title';title.textContent=e.title;const meta=document.createElement('div');meta.className='modal-event-meta';meta.textContent=({test:'시험·수행평가',school:'학사일정',class:'학급 일정',personal:'내 일정'})[e.type]||'일정';body.append(title,meta);if(e.desc){const desc=document.createElement('div');desc.className='modal-event-desc';desc.textContent=e.desc;body.appendChild(desc)}item.append(bar,body);root.appendChild(item)});
+ $('dayModal').classList.add('open');document.body.style.overflow='hidden';$('closeModal').focus();
+}
+function closeDayModal(){$('dayModal').classList.remove('open');document.body.style.overflow=''}
+function renderAll(){renderCalendar();renderSelected();renderUpcoming()}
+function save(){try{localStorage.setItem(key,JSON.stringify(custom))}catch(e){toast('저장할 수 없어요. 브라우저 저장 설정을 확인해 주세요.')}}
+function toast(msg){let t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+$('closeModal').onclick=closeDayModal;$('dayModal').addEventListener('click',e=>{if(e.target===$('dayModal'))closeDayModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDayModal()});$('modalPrev').onclick=()=>{let d=new Date(selected+'T12:00:00');d.setDate(d.getDate()-1);selectDate(iso(d));openDayModal(selected)};$('modalNext').onclick=()=>{let d=new Date(selected+'T12:00:00');d.setDate(d.getDate()+1);selectDate(iso(d));openDayModal(selected)};$('modalAdd').onclick=()=>{closeDayModal();$('eventTitle').focus();$('eventForm').scrollIntoView({behavior:'smooth',block:'center'})};
+$('prev').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);renderCalendar()};
+$('next').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);renderCalendar()};
+$('today').onclick=()=>selectDate(iso(new Date()));
+$('goDate').onclick=()=>{if(!$('dateSearch').value){toast('먼저 날짜를 선택해 주세요.');return}selectDate($('dateSearch').value)};
+$('dateSearch').addEventListener('keydown',e=>{if(e.key==='Enter')$('goDate').click()});
+document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));renderAll()});
+document.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>selectDate(b.dataset.jump));
+$('showAll').onclick=()=>{filter='all';document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x.dataset.filter==='all'));renderAll();toast('전체 일정을 표시해요.')};
+$('eventForm').addEventListener('submit',e=>{e.preventDefault();let title=$('eventTitle').value.trim(),date=$('eventDate').value;if(!title||!date){toast('일정 이름과 날짜를 입력해 주세요.');return}custom.push({id:'c'+Date.now(),date,title,type:$('eventType').value,desc:$('eventDesc').value.trim(),fixed:false});save();$('eventTitle').value='';$('eventDesc').value='';selectDate(date);toast('일정을 추가했어요.')});
+$('dateSearch').value=selected;$('eventDate').value=selected;renderAll();
+</script></body></html>
